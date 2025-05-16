@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
 
@@ -29,8 +30,7 @@ def read_root():
 @app.post("/summarize")
 async def summarize(req: SummaryRequest):
     try:
-        client = OpenAI(api_key="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")
-
+        
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
