@@ -22,7 +22,7 @@ def read_root():
 async def summarize(req: SummaryRequest):
     try:
         # Initiera klienten inuti funktionen
-        client = OpenAI(api_key="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")
+        client = OpenAI(api_key="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")
 
 
 
