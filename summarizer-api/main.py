@@ -34,7 +34,7 @@ async def summarize(req: SummaryRequest):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "Sammanfatta följande websida kortfattat."},
+                {"role": "system", "content": "Summarize following website briefly."},
                 {"role": "user", "content": req.text}
             ],
             temperature=0.5,
