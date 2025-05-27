@@ -22,6 +22,7 @@ app.add_middleware(
 
 class SummaryRequest(BaseModel):
     text: str
+    detailed: bool = False
 
 @app.get("/")
 def read_root():
@@ -30,15 +31,22 @@ def read_root():
 @app.post("/summarize")
 async def summarize(req: SummaryRequest):
     try:
+
+        if req.detailed:
+            prompt = "Provide a detailed and thorough summary of the following website:"
+        else:
+            prompt = "Summarize the following website briefly:"
+
+        max_tokens = 300 if req.detailed else 150
         
         response = client.chat.completions.create(
             model="gpt-4.1",
             messages=[
-                {"role": "system", "content": "Summarize following website briefly and with pretty simple words so people can understand it good."},
+                {"role": "system", "content": prompt},
                 {"role": "user", "content": req.text}
             ],
             temperature=0.5,
-            max_tokens=150
+            max_tokens=max_tokens
         )
 
         summary = response.choices[0].message.content
